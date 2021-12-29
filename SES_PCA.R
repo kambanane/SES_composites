@@ -5,6 +5,9 @@
 #### from the data that Iwashita sent ###############
 #####################################################
 
+### There are many methods of creating SES indices. Traditionally, people have used PCA (See Filmer, Pritchett, 2001). PCA, however, assumes normally distributed continuous data. Asset surveys however are almost invariably categorical. In practice, it might not make much of a difference, but since PCA is inappropriate and other methods exist, I recommend trying something else. 
+# People often just convert the data to numeric (1 = Yes, 0 = No) and go from there. I recommend using MCA instead but if you must use PCA, here is some code to create indices using that method.
+
 
 #### Get require libraries ####
 

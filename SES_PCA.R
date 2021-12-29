@@ -27,7 +27,7 @@ ses_data_only_asset_columns <- ses_data %>%
   mutate_at(names(ses_data %>%
                     dplyr::select(-ID)), funs(factor(.))) %>% ## Convert everything to factors
   mutate_at(names(ses_data %>%
-                    dplyr::select(-ID)), funs(as.numeric(.)-1)) ## PCA will only accept numeric variables. We not convert our factors to numbers to allow us to use this data. We subtract 1 so that all binary variables are 0 and 1.
+                    dplyr::select(-ID)), funs(as.numeric(.) - 1)) ## PCA will only accept numeric variables. We not convert our factors to numbers to allow us to use this data. We subtract 1 so that all binary variables are 0 and 1.
 
 #### Check for missingness ####
 
@@ -48,14 +48,20 @@ pca <-
 ## Biplot provides a plot of the second component against the first.
 biplot(pca)
 
-## Use the first component as our SES measure. If we have some reason to, we can always include the second as well. 
+## You can also use ggbiplot for a better looking plot
+## You might have to install from the github repo: library(devtools) install_github("vqv/ggbiplot")
+library(ggbiplot)
+ggbiplot(pca, ellipse=TRUE) + 
+  ggtitle("Biplot of first two components of PCA of SES data set")
+
+## Use the first component as our SES measure. If we have some reason to, we can always include the second as well.
 #### Add first component back to original data file to get our asset index
-ses_data$ses_pca <- pca$x[,1]
+ses_data$ses_pca <- pca$x[, 1]
 
 #### Cut into categories and rename ####
 ses_data$ses_categories_pca <- quantcut(ses_data$ses_pca, 5)
 levels(ses_data$ses_categories) <-
-  c("5 (Wealthiest)", "4", "3", "2", "1 (Poorest)")
+  c("5 (Wealthiest)", "4", "3", "2", "1 (Poorest)") ## Warning the direction of the categories might change depending on how the PCA interprets your data. Adjust accordingly.
 
 ## Summarize
 summary(ses_data)

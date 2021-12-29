@@ -43,6 +43,7 @@ mca = mca(ses_data_only_asset_columns, nf = 5)
 ## Set number of categories for each variable, though in this case there are only two.
 cats = apply(ses_data_only_asset_columns , 2, function(x) nlevels(as.factor(x)))
 
+### Put this all into a data frame
 mca2_vars_df = data.frame(mca$cs, Variable = rep(names(cats), cats))
 
 # data frame with observation coordinates

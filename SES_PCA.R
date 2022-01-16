@@ -68,3 +68,5 @@ levels(ses_data$ses_categories) <-
 
 ## Summarize
 summary(ses_data)
+
+
